@@ -1,0 +1,21 @@
+services:
+  yidong139-worker:
+    image: ${WORKER_IMAGE:-entergtang/etflix-yidong-worker}:${WORKER_TAG:-latest}
+    pull_policy: always
+    container_name: ${WORKER_CONTAINER_NAME:-yidong139-worker}
+    volumes:
+      - ${WORKER_DATA_HOST_PATH:-./data}:/app/data
+    environment:
+      MASTER_URL: ${MASTER_URL:-}
+      MASTER_URLS: ${MASTER_URLS:-}
+      AUTH_CODE: ${AUTH_CODE}
+      WORKER_NAME: ${WORKER_NAME:-worker-docker}
+      MOBILE_COOKIE_HEADER: ${MOBILE_COOKIE_HEADER:-}
+      MOBILE_AUTHORIZATION: ${MOBILE_AUTHORIZATION:-}
+      AUTH_HEALTH_CHECK_INTERVAL_MS: ${AUTH_HEALTH_CHECK_INTERVAL_MS:-300000}
+      AUTH_EXPIRY_SKEW_MS: ${AUTH_EXPIRY_SKEW_MS:-60000}
+      PYTHON_WORKER_PATH: ${PYTHON_WORKER_PATH:-/app/protected/mobile_cloud_share_runner.py}
+      WORKER_CODE_KEY: ${WORKER_CODE_KEY}
+      WORKER_DATA_DIR: /app/data
+      WORKER_CONFIG_PATH: /app/data/config.json
+    restart: unless-stopped
